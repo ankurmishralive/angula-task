@@ -1,0 +1,118 @@
+<!doctype html>
+ 
+<html ng-app="scotchTodo">
+<head>
+ 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>User - Angular-Node-Mongo</title>
+ 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		html{ overflow-y:scroll; }
+		body{ padding-top:50px; }
+		#todo-list{ margin-bottom:30px; }
+		#todo-form{ margin-bottom:50px; }
+		.mt-4{margin-top: 30px;margin-bottom: 30px;}
+		.borders{border: 1px #555 solid;border-radius:5px;}
+		.p20{padding:20px;}			
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+ 	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<!-- HEADER AND TODO COUNT -->
+		<div class="jumbotron text-center">
+			<h1>Total Users <span class="label label-danger">{{ todos.length }}</span></h1>
+		</div>
+
+
+		
+		<!-- FORM TO CREATE TODOS -->
+		<div id="todo-form" class="row borders">
+			<div class="col-md-12  text-center">
+				<h2>Create User</h2>
+				<form>
+						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+					<div class="form-group p20">
+						<div class="col-md-4">
+							<input type="text" class="form-control input-lg text-center" placeholder="Enter Full Name" ng-model="formData.first">
+						</div>
+						<div class="col-md-4">
+							<input type="text" class="form-control input-lg text-center" placeholder="Enter City" ng-model="formData.address">
+						</div>
+						<div class="col-md-4">
+							<input type="number" class="form-control input-lg text-center" placeholder="Enter Phone" ng-model="formData.phone">
+						</div>
+						<div class="col-md-4">
+							<input type="text" class="form-control input-lg text-center mt-4" placeholder="Enter DOB" ng-model="formData.dob">
+						</div>
+						 
+						<div class="col-md-4">
+							 <button type="submit" class="btn btn-primary btn-block mt-4" ng-show="!isEditing" ng-click="createTodo()">Add User</button>
+							
+						</div>
+						<div class="col-md-4">
+							<button type="submit" class="btn btn-primary  btn-block  mt-4" ng-show="isEditing" ng-click="updateToDo()">Update User</button>
+						</div>
+					</div>
+					<!-- END BIND THIS VALUE TO formData.text IN ANGULAR -->
+				</form>
+			 </div>		 
+ 		 </div>
+		<!-- END FORM TO CREATE TODOS -->
+
+		<div class="clearfix">&nbsp;</div>
+
+		<!-- User LIST -->
+		<div id="todo-list" class="row">
+			<div class="">
+				<h2> User Lsit</h2>
+				<table class="table table-responsive table-stripped">
+					<thead class="dark">
+					 
+						<th>Full_Name</th>
+						<th>City</th>
+						<th>Phone</th>
+						<th>DOB</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="todo in todos"> 
+							<td>{{ todo.first }}</td>
+							<td>{{ todo.address }}</td>
+							<td>{{ todo.phone }}</td>
+							<td>{{ todo.dob }}</td>
+							<td><a href="#" ng-click="editToDo(todo._id, todo)">Edit </a></td>
+							<td>
+								<a href="#" ng-click="deleteTodo(todo._id)">Delete </a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+
+			</div>
+		</div>
+
+		</div>
+
+		 
+
+	</div>
+
+</body>
+</html>
